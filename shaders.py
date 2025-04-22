@@ -1,5 +1,5 @@
 
-uv_raster_vshader = """
+uvRasterVshader = """
 #version 330 core
 layout(location = 0) in vec3 position;
 layout(location = 1) in vec3 normal;
@@ -10,32 +10,31 @@ uniform mat4 modelMat;
 uniform mat4 viewMat;
 uniform mat4 projMat;
 
-uniform vec2 lightmapTiling;
-uniform vec2 lightmapOffset;
+//uniform vec2 lightmapTiling;
+//uniform vec2 lightmapOffset;
 
 smooth out vec3 fragNormal; 
 smooth out vec3 fragPos; 
 
 void main()
 {
-    vec2 uv_coords = (lightmapTiling* uv ) + lightmapOffset;
+    //vec2 uvCoords = (lightmapTiling* uv ) + lightmapOffset;
+    vec2 uvCoords = uv;
 
     //world space coordinates
     fragNormal = mat3(transpose(inverse(modelMat))) * normal;
     fragPos = ( modelMat * vec4(position, 1.0) ).xyz;
 
-    gl_Position =  vec4( mix(-1.0,1.0,uv_coords.x), mix(-1.0,1.0,uv_coords.y), 1.0, 1.0);
+    gl_Position =  vec4( mix(-1.0,1.0,uvCoords.x), mix(-1.0,1.0,uvCoords.y), 1.0, 1.0);
 
 }
 """
 
-uv_raster_fshader = """
+uvRasterFshader = """
 #version 330 core
 
 smooth in vec3 fragNormal; 
 smooth in vec3 fragPos;
-
-uniform uvec2 objId;
 
 layout(location = 0) out vec3 posColor;  
 layout(location = 1) out vec3 normalColor;  
@@ -46,12 +45,12 @@ void main()
 {
     posColor = fragPos;
     normalColor = normalize(fragNormal);
-    idColor = uvec3(objId.x, objId.y, 0u );
+    idColor = uvec3(1u, 0u, 0u );
 }
 """
 
 
-cubemap_vshader = """
+cubemapVshader = """
 #version 330 core
 layout(location = 0) in vec3 position;
 layout(location = 1) in vec3 normal;
@@ -79,7 +78,7 @@ void main()
 """
 
 
-cubemap_gshader = """
+cubemapGshader = """
 #version 330 core
 layout (triangles) in;
 layout (triangle_strip, max_vertices=18) out;
@@ -128,7 +127,7 @@ void main()
 }
 """
 
-cubemap_fshader = """
+cubemapFshader = """
 #version 330 core
 in vec3 fragNormal; 
 in vec3 fragColor; 
@@ -140,8 +139,7 @@ in vec3 cubeForward;
 
 layout(location = 0) out vec4 diffuseColor;
 
-uniform vec3 color;
-uniform int isLight;
+uniform int renderType;
 uniform float lightIntensity;
 
 uniform vec3 cameraUp;
@@ -149,8 +147,8 @@ uniform vec3 cameraPos;
 
 uniform float texResolution;
 
-uniform vec2 lightmapTiling;
-uniform vec2 lightmapOffset;
+//uniform vec2 lightmapTiling;
+//uniform vec2 lightmapOffset;
 
 uniform sampler2D tex1;
 uniform sampler2D lightmap;
@@ -178,13 +176,13 @@ void main()
 
     float generalCompensation = getCubeCompensation() * lambertLaw * distortionCompensation ;
 
-    if (isLight == 0)
+    if (renderType == 0)
     {
         float dotProd = dot(  normalize(fragNormal) , normalize( vec3(0.0,1.0,0.2) ) );
         float lightDotVal = (1.0 + dotProd) / 2.0;
 
         vec3 textureColor = texture(tex1, fragUv).rgb;
-        vec3 lightmapColor = texture(lightmap, (fragUv * lightmapTiling) + lightmapOffset).rgb;
+        vec3 lightmapColor = texture(lightmap, fragUv).rgb;
 
         float backFaceBlackValue = dot( normalize(fragNormal) , normalize(fragPos.xyz - cameraPos));
         backFaceBlackValue = backFaceBlackValue <= 0.005 ? 1.0 : 0.0;
@@ -192,10 +190,10 @@ void main()
         diffuseColor = vec4(fragColor * 1.0 * lightmapColor * generalCompensation * backFaceBlackValue, 1.0) * discardValue;
 
     }
-    else if (isLight == 1) {
-        diffuseColor = vec4(color * lightIntensity * generalCompensation, 1.0) * discardValue;
+    else if (renderType == 1) {
+        diffuseColor = vec4(fragColor * lightIntensity * generalCompensation, 1.0) * discardValue;
     }
-    else if (isLight == 2) {
+    else if (renderType == 2) {
 
         vec2 coords = gl_FragCoord.xy/texResolution;
 

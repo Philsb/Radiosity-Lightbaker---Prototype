@@ -15,6 +15,11 @@ def add_unique(list, value):
         return len(list) - 1
     else:
         return get_index(list, value)
+    
+def add_normal(list,value):
+    list.append(value)
+    return len(list) - 1
+
 
 def mesh_triangulate(me):
     import bmesh
@@ -44,32 +49,40 @@ def export_obj_mesh(obj, dir_path):
         
         
         #Gather all triangles data
+        
+        print("Looping through faces 1")
+        i = 0
         for f in me.polygons:
             
             face_dict = {}
             face_dict["material_index"] = f.material_index
             face_dict["vertices"] = []
             
+            i += 1
+            
+            if i % 100 == 0:
+                print("face: ", str(i))
+            
             for l_idx in f.loop_indices:
                 
                 #Position
                 vert_index = me.loops[l_idx].vertex_index
                 pos = me.vertices[vert_index].co
-                pos_idx = add_unique( positions, [pos.x, pos.y, pos.z] )
+                pos_idx = add_normal( positions, [pos.x, pos.y, pos.z] )
                 
                 #Normal
                 normal = me.loops[l_idx].normal
-                normal_idx = add_unique( normals, [normal.x, normal.y, normal.z] )
+                normal_idx = add_normal( normals, [normal.x, normal.y, normal.z] )
 
                 #Color
                 color_layer = me.color_attributes["Color"].data
                 vert_color = color_layer[vert_index].color
-                color_idx = add_unique( colors, [vert_color[0], vert_color[1], vert_color[2]] )
+                color_idx = add_normal( colors, [vert_color[0], vert_color[1], vert_color[2]] )
                 
                 #TexUV
                 uv_layer = me.uv_layers['UVMap'].data
                 uv = uv_layer[l_idx].uv
-                uv_idx = add_unique( uvs, [uv.x, uv.y] )
+                uv_idx = add_normal( uvs, [uv.x, uv.y] )
                 
                 vertex = {
                     "pos_idx": pos_idx,
@@ -86,6 +99,8 @@ def export_obj_mesh(obj, dir_path):
         #Sort faces into each segment representing each material
         segments = {}
         loop_ctr = 0
+        print("Looping through faces 2")
+        i = 0
         for f in faces:
             mat_index = str(f["material_index"])
             
@@ -94,7 +109,10 @@ def export_obj_mesh(obj, dir_path):
                             "vertices":[], 
                             "indices":[]
                         }
-                
+            
+            i += 1
+            if i % 100 == 0:
+                print("face 2: ", str(i))
                 
             current_segment = segments[ mat_index ]
             
@@ -122,7 +140,8 @@ def export_obj_mesh(obj, dir_path):
         
         }
         
-        
+        print("Looping through segments")
+        i = 0
         for key, segment in segments.items():
             
             # Encode the bytearray to a base64 string
@@ -143,6 +162,10 @@ def export_obj_mesh(obj, dir_path):
             }
             
             final_dict["meshes"].append(segment_entry)
+            
+            i += 1
+            if i % 100 == 0:
+                print("segm: ", str(i))
 
        
         file_path = dir_path + obj.name + ".mesh.json"   
@@ -162,7 +185,10 @@ def export_obj_mesh(obj, dir_path):
 # Get the collection by name
 collection = bpy.data.collections.get("Export")
 
+#Put your path to export the meshes here
+path = ""
+
 for obj in bpy.context.selected_objects:
-    export_obj_mesh(obj, "D:\\Users\\Felipe\\Desktop\\TestRaytracingScene\\New2\\")
+    export_obj_mesh(obj, path)
 
         

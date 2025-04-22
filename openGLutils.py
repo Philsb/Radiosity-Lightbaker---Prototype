@@ -6,6 +6,9 @@ import numpy as np
 max_float32 = 3.402823466e+38
 min_float32 = -3.402823466e+38
 
+"""
+Formats of opengl along with their np types, this is for QoL really.
+"""
 formats = {
     "default" : 
     {
@@ -38,7 +41,7 @@ formats = {
     },
 }
 
-def check_opengl_error():
+def checkOpenglError():
     error = glGetError()
     if error != GL_NO_ERROR:
         if error == GL_INVALID_ENUM:
@@ -56,7 +59,7 @@ def check_opengl_error():
         else:
             print(f"OpenGL Error: {error}")
 
-def check_framebuffer_status():
+def checkFramebufferStatus():
     status = glCheckFramebufferStatus(GL_FRAMEBUFFER)
     if status == GL_FRAMEBUFFER_COMPLETE:
         print("Framebuffer is complete!")
@@ -79,73 +82,42 @@ def check_framebuffer_status():
     else:
         print(f"Framebuffer incomplete: Unknown error, status code: {status}")
 
-def create_frameBuffer(format):
-    #RENDER TEXTURE
-    rendered_texture = glGenTextures(1)
-    glBindTexture(GL_TEXTURE_2D, rendered_texture)
-
-    glTexImage2D(GL_TEXTURE_2D, 0, format["internalformat"], 1024, 1024, 0, format["format"], format["type"], None)
-    # Set texture filtering
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST)
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST)
-   
-    
-    #DEPTH BUFFER
-    depth_buffer = glGenRenderbuffers(1)
-    glBindRenderbuffer(GL_RENDERBUFFER, depth_buffer)
-    # Create the depth buffer's storage
-    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, 1024, 1024)
-   
-    #FRAME BUFFER
-    fbo = glGenFramebuffers(1)
-    glBindFramebuffer(GL_FRAMEBUFFER, fbo);  
-
-    #ATTACH COLOR
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, rendered_texture, 0)
-    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, depth_buffer)
-
-    if glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE:
-        check_framebuffer_status()
-        return (0,0,0)
-    
-    glBindFramebuffer(GL_FRAMEBUFFER, 0)
-    glBindRenderbuffer(GL_RENDERBUFFER, 0)
-    glBindTexture(GL_TEXTURE_2D, 0)
-
-    return (rendered_texture, depth_buffer, fbo)
-
-# Function to set a mat4 uniform
-def set_uniform_matrix(program, name, matrix):
+"""
+Set different types of uniforms to the shader
+"""
+def setUniformMatrix(program, name, matrix):
     location = glGetUniformLocation(program, name)
     glUniformMatrix4fv(location, 1, GL_FALSE, glm.value_ptr(matrix))
 
-
-def set_uniform_vec2(program, name, value):
+def setUniformVec2(program, name, value):
     location = glGetUniformLocation(program, name)
     glUniform2fv(location, 1, glm.value_ptr(value))
     
-def set_uniform_vec3(program, name, value):
+def setUniformVec3(program, name, value):
     location = glGetUniformLocation(program, name)
     glUniform3fv(location, 1, glm.value_ptr(value))
 
-def set_uniform_float(program, name, value):
+def setUniformFloat(program, name, value):
     location = glGetUniformLocation(program, name)
     glUniform1f(location, value)
 
-def set_uniform_uvec2(program, name, value):
+def setUniformUvec2(program, name, value):
     location = glGetUniformLocation(program, name)
     glUniform2uiv(location, 1, glm.value_ptr(value))
 
-def set_uniform_int(program, name, value):
+def setUniformInt(program, name, value):
     location = glGetUniformLocation(program, name)
     glUniform1i(location, value)
 
+
+"""
+Class that describes the vbo of the mesh
+"""
 class OpenglMeshBuffer:
     def __init__(self, vertices: np.ndarray, indices: np.ndarray):
         self.VBO = -1
         self.VAO = -1
         self.IBO = -1
-        self.indices_amount = 0
 
         self.vertices = vertices
         self.indices = indices
@@ -155,6 +127,7 @@ class OpenglMeshBuffer:
             self.VAO = glGenVertexArrays(1)
             self.IBO = glGenBuffers(1)
             self.VBO = glGenBuffers(1)
+            self.indicesAmount = 0 
             
             glBindVertexArray(self.VAO)
 
@@ -164,7 +137,7 @@ class OpenglMeshBuffer:
 
             glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, self.IBO)
             glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.nbytes, indices, GL_STATIC_DRAW)
-            self.indices_amount = indices.size
+            self.indicesAmount = indices.size
 
             position_size = 3  
             normal_size = 3 
@@ -198,16 +171,22 @@ class OpenglMeshBuffer:
         glBindBuffer(GL_ARRAY_BUFFER, 0)
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0) 
 
+"""
+Class that describes the mesh, each segment the mesh parts that are separated by each material, also with its corresponding vbo
+"""
 class Mesh:
     def __init__(self):
         self.name = ""
-        self.sub_meshes = []
+        self.subMeshes = []
     
 
+"""
+Class for openglTextures, along with functions to update their data
+"""
 class OpenGLTexture:
     def __init__(self, width, height, format, pixels: np.ndarray):
-        self.texture_id = glGenTextures(1)
-        glBindTexture(GL_TEXTURE_2D, self.texture_id)
+        self.textureId = glGenTextures(1)
+        glBindTexture(GL_TEXTURE_2D, self.textureId)
         self.width = width
         self.height = height
         self.format = format
@@ -222,7 +201,7 @@ class OpenGLTexture:
 
     def bind(self):
         #Bind the texture for rendering.
-        glBindTexture(GL_TEXTURE_2D, self.texture_id)
+        glBindTexture(GL_TEXTURE_2D, self.textureId)
 
     def unbind(self):
         #Unbind the texture.
@@ -237,17 +216,17 @@ class OpenGLTexture:
     def __del__(self):
         #Delete the texture when the object is destroyed.
         self.unbind()
-        glDeleteTextures(1, [self.texture_id])
+        glDeleteTextures(1, [self.textureId])
 
 
-def create_shader_program(vertex_source: str, fragment_source: str):
+def createShaderProgram(vertex_source: str, fragment_source: str):
     program = compileProgram(
         compileShader(vertex_source, GL_VERTEX_SHADER),
         compileShader(fragment_source, GL_FRAGMENT_SHADER),
     )
     return program
 
-def create_shader_program_w_geometry(vertex_source: str, fragment_source: str, geometry_source: str):
+def createShaderProgramGeometry(vertex_source: str, fragment_source: str, geometry_source: str):
     program = compileProgram(
         compileShader(vertex_source, GL_VERTEX_SHADER),
         compileShader(fragment_source, GL_FRAGMENT_SHADER),
