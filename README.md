@@ -1,6 +1,6 @@
 # Radiosity Lightmap Baker (Python Prototype)
 
-This project is a prototype implementation of a **radiosity light baking system**, based on concepts from [Hugo Elias's Radiosity Page](http://www.hugi.scene.org/online/coding/hugo_radiosity.htm)
+This project is a prototype implementation of a **radiosity light baking system**, based on concepts from [Hugo Elias's Radiosity](https://www.jmeiners.com/Hugo-Elias-Radiosity/)
 **Note:** This project is not optimized for performance and will most likely be **ported to C++** in the future to improve speed and scalability.
 
 ## Implementation Overview
@@ -38,13 +38,6 @@ This project is a prototype implementation of a **radiosity light baking system*
 7. **Output**  
    For each iteration the lightmaps values are computed and saved to disk.
 
----
-
-> ⚠️ **Important Notes:**  
-> - This implementation is a **prototype**, and performance is not yet optimized.  
-> - A **future C++ port** is planned for better performance and scalability.  
-> - Only **one UV map** and **one vertex color layer** per mesh are supported at this stage.  
-> - Scenes must be **exported with the provided Blender scripts** for compatibility.
 
 ## 📦 Prerequisites
 
@@ -78,7 +71,7 @@ Execute the `radiosityBaker.py` script with the following arguments:
 ### Optional Arguments
 |Argument | Description|
 |--------|------------------|
-|-q, --cubemapQuality | Resolution of each cubemap face (default: 128)|
+|-q, --cubemapQuality | Resolution of each cubemap face when rendring from each texel (default: 128)|
 |-i, --iterations | Number of bounce iterations (default: 5)|
 
 ### Example Usage
@@ -102,7 +95,11 @@ Use `ExportMesh.py` script to export meshes from a blender file.
 3. Add in script **export directory** where the mesh data should be saved.
 4. Run the script to export the selected meshes.
 
-**⚠️ Very Important:** Each mesh (even the light/emissive meshes ones) should contain a UV channel for the lightmaps UV and vertex colors for the colors of the light and the meshes. The script will not run if the meshes don't contain those attributes.
+**⚠️ Very Important:** Each mesh (even the light/emissive meshes ones) should contain a UV channel for the lightmaps UV (already precomputed by blender or other software) and vertex colors for the colors of the light and the meshes. The script will not run if the meshes don't contain those attributes.
+
+**⚠️ Notes:**
+- The **"Lights"** are meshes with an emissive property, not blender's light objects.
+- The **"Lights"** colors are given by the vertex colors.
 
 #### 2. **ExportScene.py**
 
@@ -116,10 +113,6 @@ The `ExportScene.py` script exports the scene objects, including information abo
 4. Run the script to export the scene data.
 5. After the **scene.json** is created you can modify the resolution and name of the lightmap for each object. Aswell as the intensity of each light.
 
-**⚠️ Notes:**
-
-- The **"Lights"** are meshes with an emissive property, not blender's light objects.
-- The **"Lights"** colors are given by the vertex colors.
 
 ## 🔧 Improvements & Limitations
 
@@ -142,10 +135,10 @@ The `ExportScene.py` script exports the scene objects, including information abo
     - 💡 This could be improved by automatically assigning a default white vertex color in the mesh exporter script.
   - Light meshes also need a UV and Vertex Color attribute, even if they don't use the UV.
 
-- **Direct Light Artifacts**: In some cases, direct light bounces can result in artifacts. These can be mitigated by increasing the resolution of the cubemap used for rendering. But will not delete them.
+- **Direct Light Artifacts**: In some cases, direct lights can have artifacts. These can be mitigated by increasing the resolution of the cubemap used for rendering. But will not get rid of them.
 
-- **Black edges**: Since background of the lightmaps is black, there is a risk of this "blackness" bleeding into the lightmap. This effect happens at the seams between UV islands, causing a dark edge or patch.
-  - **Fix**: This can be mitigated using image editing tools like Photoshop by **dilating the colors UV islands on the borders**. A mask map is provided for each lightmap specifically for this purpose, making it easy to dilate the lightmap and reduce bleeding.
+- **Black edges**: Since the background of the lightmaps is black, there is a risk of this "blackness" bleeding into the lightmap. This effect happens at the seams between UV islands, causing a dark edge or patch.
+  - **Fix**: This can be mitigated using image editing tools like Photoshop by **dilating the colors of the UV islands on the borders**. A mask map is provided for each lightmap specifically for this purpose, making it easy to dilate the lightmap and reduce black bleeding.
 
 🛠️ **Note:**  
 This is an experimental and educational implementation. I want to **port it to C++** in the future and turn it into a **formal, optimized tool** capable of handling larger scenes and supporting more advanced lighting features.
