@@ -5,10 +5,13 @@ from pygame.locals import *
 from OpenGL.GL import *
 import numpy as np
 import glm
+import argparse
+
+#project's modules
 from openGLutils import *
 from utils import *
 from shaders import *
-import argparse
+
 
 cubeMapRenderShader = None
 
