@@ -38,5 +38,6 @@ def exportSceneToJson(filepath):
     print(f"Exported scene to {filepath}")
     
 # Your export path here
+sceneName = "scene3.json"
 exportPath = ""
-exportSceneToJson(exportPath)
+exportSceneToJson(exportPath + "\\" + sceneName)

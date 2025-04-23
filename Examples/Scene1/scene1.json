@@ -1,0 +1,105 @@
+{
+    "objects": [
+        {
+            "mesh": "Room.mesh.json",
+            "position": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "lightmapTexName": "Room_lightmap",
+            "lightmapSize": 128
+        },
+        {
+            "mesh": "Cube1.mesh.json",
+            "position": [
+                0.9679805040359497,
+                -2.8627490997314453,
+                1.2077897787094116
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "lightmapTexName": "Cube1_lightmap",
+            "lightmapSize": 128
+        },
+        {
+            "mesh": "Cube2.mesh.json",
+            "position": [
+                3.431979179382324,
+                1.8720968961715698,
+                0.6679610013961792
+            ],
+            "rotation": [
+                0.0,
+                -0.0,
+                -0.3572827875614166
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "lightmapTexName": "Cube2_lightmap",
+            "lightmapSize": 128
+        },
+        {
+            "mesh": "Cylinder.mesh.json",
+            "position": [
+                0.469321608543396,
+                2.543414831161499,
+                0.2516383230686188
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "lightmapTexName": "Cylinder_lightmap",
+            "lightmapSize": 128
+        }
+    ],
+    "lights": [
+        {
+            "mesh": "RoofLight.mesh.json",
+            "position": [
+                1.507161021232605,
+                -0.2796621024608612,
+                7.301258563995361
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "intensity": 25.0
+        }
+    ]
+}

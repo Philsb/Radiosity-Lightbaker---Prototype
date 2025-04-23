@@ -1,0 +1,65 @@
+{
+    "objects": [
+        {
+            "mesh": "Walls.mesh.json",
+            "position": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "lightmapTexName": "Walls_lightmap",
+            "lightmapSize": 256
+        },
+        {
+            "mesh": "Rooms.mesh.json",
+            "position": [
+                -0.1781620979309082,
+                -4.0,
+                2.821420907974243
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "lightmapTexName": "Rooms_lightmap",
+            "lightmapSize": 256
+        }
+    ],
+    "lights": [
+        {
+            "mesh": "Lights.mesh.json",
+            "position": [
+                -3.987586498260498,
+                0.0,
+                2.249044418334961
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "intensity": 30.0
+        }
+    ]
+}

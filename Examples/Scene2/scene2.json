@@ -1,0 +1,64 @@
+{
+    "objects": [
+        {
+            "mesh": "room.mesh.json",
+            "position": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "lightmapTexName": "room_lightmap",
+            "lightmapSize": 256
+        }
+    ],
+    "lights": [
+        {
+            "mesh": "Sky.mesh.json",
+            "position": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "intensity": 2.0
+        },
+        {
+            "mesh": "Sun.mesh.json",
+            "position": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "intensity": 6100.0
+        }
+    ]
+}

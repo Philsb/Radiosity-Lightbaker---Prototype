@@ -1,5 +1,5 @@
 import os
-os.environ["PYGAME_HIDE_SUPPORT_PROMPT"] = "1"
+os.environ["PYGAME_HIDE_SUPPORT_PROMPT"] = "1" #for muting the pygame print at start
 import pygame
 from pygame.locals import *
 from OpenGL.GL import *
@@ -244,7 +244,7 @@ def radiosityRender(scene, lightmapsData, outputPath, iterationsNum = 5, fboRend
                         }
     
     # We need to render the only a scene with a unit cube first, so we can calculate the divisor of the multplier described by Hugo Elias ,
-    renderHemisphereScene(multiplierCubeScene, {}, cubemapFBO, fboRenderSize, True, cubeSceneCameraTransform)
+    renderHemisphereScene(multiplierCubeScene, {}, fboRenderSize, True, cubeSceneCameraTransform)
     multiplerDivisorValue = calculateMultiplierDivisorValue(cubemapFBO, fboRenderSize)
     #print ("Multiplier Divisor: " + str(multiplerDivisorValue))
 
@@ -305,7 +305,6 @@ def radiosityRender(scene, lightmapsData, outputPath, iterationsNum = 5, fboRend
                         renderHemisphereScene(
                             scene,
                             finalLightmaps, 
-                            cubemapFBO,
                             fboRenderSize,
                             False,
                             cameraTransform
@@ -315,7 +314,7 @@ def radiosityRender(scene, lightmapsData, outputPath, iterationsNum = 5, fboRend
 
                         finalPixel = np.array([finalColorValue.r, finalColorValue.g, finalColorValue.b])# * 255
                         imgData[pixI][pixJ] = finalPixel
-                print (f"Progress {lightmapTexName}, Pass# {iteration}:    {pixI} / {renderTexSize}")
+                print (f"Progress {lightmapTexName}, Pass# {iteration+1}:    {pixI} / {renderTexSize}")
 
         for lightmapTexName in lightmapsData:
             renderTexSize = lightmapsData[lightmapTexName]["texSize"]
@@ -327,7 +326,7 @@ def radiosityRender(scene, lightmapsData, outputPath, iterationsNum = 5, fboRend
 
             imgData = imgData.astype(np.float32)
             fileName = os.path.basename(lightmapTexName)
-            saveExr(outputPath + fileName + "_" + str(iteration), imgData)
+            saveExr(outputPath + fileName + "_" + str(iteration+1), imgData)
             #savePng(outputPath + "radiosityRender" + fileName + str(iterations), uint8Array, "RGB")
 
 def parseArgs():
@@ -342,13 +341,13 @@ def parseArgs():
 def main():
     args = parseArgs()
     if not os.path.isfile(args.scenePath):
-        raise FileNotFoundError(f"Scene file not found: {args.scene_path}")
+        raise FileNotFoundError(f"Scene file not found: {args.scenePath}")
     
     if not os.path.isdir(args.resourcesPath):
-        raise NotADirectoryError(f"Resources path not found: {args.resources_path}")
+        raise NotADirectoryError(f"Resources path not found: {args.resourcesPath}")
     
     if not os.path.isdir(args.outputPath):
-        os.makedirs(args.output_path)
+        os.makedirs(args.outputPath)
 
     pygame.init()
 

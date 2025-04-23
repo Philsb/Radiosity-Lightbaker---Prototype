@@ -260,9 +260,9 @@ def savePng(path, imageArray, format = "RGBA"):
     image = np.flip(image, axis=0)
     img = Image.fromarray(image)
     img.save(path + ".png")
-    print("---- Lightmap .png saved to: " + path + ".png")
+    print("---- .png saved to: " + path + ".png")
 
 def saveExr(path, imageArray):
     imageArray = np.flip(imageArray, axis=0)
     pyexr.write(path+".exr", imageArray)
-    print("---- Lightmap .exr saved to: " + path + ".exr")
+    print("---- .exr saved to: " + path + ".exr")
