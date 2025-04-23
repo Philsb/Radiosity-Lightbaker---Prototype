@@ -24,10 +24,32 @@ The radiosity solution converges over multiple iterations. Below is a visualizat
 
 ### Scene 1
 
-| Pass # | Lightmap Preview |
+| Pass # | Scene Preview |
 |--------|------------------|
 | 1      | <img src="/Examples/Scene1/scene1_pass1.png" width="200"/> |
-| 2      | ![Pass 2](/Examples/Scene1/scene1_pass2.png) |
-| 3      | ![Pass 3](/Examples/Scene1/scene1_pass3.png) |
-| 4      | ![Pass 4](/Examples/Scene1/scene1_pass4.png) |
-| 5      | ![Pass 5](/Examples/Scene1/scene1_pass5.png) |
+| 2      | <img src="/Examples/Scene1/scene1_pass2.png" width="200"/> |
+| 3      | <img src="/Examples/Scene1/scene1_pass3.png" width="200"/>|
+| 4      | <img src="/Examples/Scene1/scene1_pass4.png" width="200"/>|
+| 5      | <img src="/Examples/Scene1/scene1_pass5.png" width="200"/>|
+
+### Scene 2
+
+| Pass # | Scene Preview |
+|--------|------------------|
+| 1      | <img src="/Examples/Scene2/scene2_pass1.png" width="200"/> |
+| 2      | <img src="/Examples/Scene2/scene2_pass2.png" width="200"/> |
+| 3      | <img src="/Examples/Scene2/scene2_pass3.png" width="200"/>|
+| 4      | <img src="/Examples/Scene2/scene2_pass4.png" width="200"/>|
+| 5      | <img src="/Examples/Scene2/scene2_pass5.png" width="200"/>|
+
+### Scene 3
+
+| Pass # | Scene Preview |
+|--------|------------------|
+| 1      | <img src="/Examples/Scene3/scene3_pass1.png" width="200"/> |
+| 2      | <img src="/Examples/Scene3/scene3_pass2.png" width="200"/> |
+| 3      | <img src="/Examples/Scene3/scene3_pass3.png" width="200"/>|
+| 4      | <img src="/Examples/Scene3/scene3_pass4.png" width="200"/>|
+| 5      | <img src="/Examples/Scene3/scene3_pass5.png" width="200"/>|
+
+
