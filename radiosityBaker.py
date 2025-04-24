@@ -232,8 +232,6 @@ def radiosityRender(scene, lightmapsData, outputPath, iterationsNum = 5, fboRend
                                 "rotation": [0.0,0.0,0.0],
                                 "scale": [1.0,1.0,1.0],
                                 "transform": createTransform([0.0,0.0,0.0],[0.0,0.0,0.0],[1.0,1.0,1.0]),
-                                "lightmapUVTiling": [1.0,1.0],
-                                "lightmapUVOffset": [0.0,0.0],
                                 "lightmapTexName": ""
                                 }
                                ],

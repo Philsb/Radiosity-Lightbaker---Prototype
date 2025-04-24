@@ -185,8 +185,8 @@ def calculateRasterizedInformation(scene):
         glDeleteRenderbuffers(1, [lightmapFBO[1]])
     
     glDeleteProgram(shaderRasterPos)
-
     return lightmapsData
+
 """
 Creates a dict with all of the scene info from the scene json, it also creates a vbo for each mesh and calculates its transform matrix.
 """
