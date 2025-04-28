@@ -38,6 +38,39 @@ This project is a prototype implementation of a **radiosity light baking system*
 7. **Output**  
    For each iteration the lightmaps values are computed and saved to disk.
 
+## Showcase
+The radiosity solution converges over multiple iterations. Below is a visualization of the lightmap improving with each pass:
+
+### Scene 1
+
+| Pass # | Scene Preview |
+|--------|------------------|
+| 1      | <img src="/Examples/Scene1/scene1_pass1.png" width="200"/>|
+| 2      | <img src="/Examples/Scene1/scene1_pass2.png" width="200"/>|
+| 3      | <img src="/Examples/Scene1/scene1_pass3.png" width="200"/>|
+| 4      | <img src="/Examples/Scene1/scene1_pass4.png" width="200"/>|
+| 5      | <img src="/Examples/Scene1/scene1_pass5.png" width="200"/>|
+
+### Scene 2
+
+| Pass # | Scene Preview |
+|--------|------------------|
+| 1      | <img src="/Examples/Scene2/scene2_pass1.png" width="200"/>|
+| 2      | <img src="/Examples/Scene2/scene2_pass2.png" width="200"/>|
+| 3      | <img src="/Examples/Scene2/scene2_pass3.png" width="200"/>|
+| 4      | <img src="/Examples/Scene2/scene2_pass4.png" width="200"/>|
+| 5      | <img src="/Examples/Scene2/scene2_pass5.png" width="200"/>|
+
+### Scene 3
+
+| Pass # | Scene Preview |
+|--------|------------------|
+| 1      | <img src="/Examples/Scene3/scene3_pass1.png" width="200"/>|
+| 2      | <img src="/Examples/Scene3/scene3_pass2.png" width="200"/>|
+| 3      | <img src="/Examples/Scene3/scene3_pass3.png" width="200"/>|
+| 4      | <img src="/Examples/Scene3/scene3_pass4.png" width="200"/>|
+| 5      | <img src="/Examples/Scene3/scene3_pass5.png" width="200"/>|
+
 
 ## 📦 Prerequisites
 
@@ -142,40 +175,6 @@ The `ExportScene.py` script exports the scene objects, including information abo
 
 🛠️ **Note:**  
 This is an experimental and educational implementation. I want to **port it to C++** in the future and turn it into a **formal, optimized tool** capable of handling larger scenes and supporting more advanced lighting features.
-
-## Showcase
-The radiosity solution converges over multiple iterations. Below is a visualization of the lightmap improving with each pass:
-
-### Scene 1
-
-| Pass # | Scene Preview |
-|--------|------------------|
-| 1      | <img src="/Examples/Scene1/scene1_pass1.png" width="200"/>|
-| 2      | <img src="/Examples/Scene1/scene1_pass2.png" width="200"/>|
-| 3      | <img src="/Examples/Scene1/scene1_pass3.png" width="200"/>|
-| 4      | <img src="/Examples/Scene1/scene1_pass4.png" width="200"/>|
-| 5      | <img src="/Examples/Scene1/scene1_pass5.png" width="200"/>|
-
-### Scene 2
-
-| Pass # | Scene Preview |
-|--------|------------------|
-| 1      | <img src="/Examples/Scene2/scene2_pass1.png" width="200"/>|
-| 2      | <img src="/Examples/Scene2/scene2_pass2.png" width="200"/>|
-| 3      | <img src="/Examples/Scene2/scene2_pass3.png" width="200"/>|
-| 4      | <img src="/Examples/Scene2/scene2_pass4.png" width="200"/>|
-| 5      | <img src="/Examples/Scene2/scene2_pass5.png" width="200"/>|
-
-### Scene 3
-
-| Pass # | Scene Preview |
-|--------|------------------|
-| 1      | <img src="/Examples/Scene3/scene3_pass1.png" width="200"/>|
-| 2      | <img src="/Examples/Scene3/scene3_pass2.png" width="200"/>|
-| 3      | <img src="/Examples/Scene3/scene3_pass3.png" width="200"/>|
-| 4      | <img src="/Examples/Scene3/scene3_pass4.png" width="200"/>|
-| 5      | <img src="/Examples/Scene3/scene3_pass5.png" width="200"/>|
-
 
 ## 🎓 Credits
 
